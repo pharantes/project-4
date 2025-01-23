@@ -9,15 +9,21 @@ function App() {
   const initialData = { role: "some color", hex: "#123456", contrastText: "#ffffff" }
   const [colors, setColors] = useState(initialColors)
   function onSubmitColor(data) {
-    setColors([...initialColors, { ...data, id: uid() }])
+    setColors((prevValue) => [...prevValue, { ...data, id: uid() }])
+  }
+  function handleDelete(id) {
+    setColors(colors.filter((color) => {
+      return color.id != id
+    }))
   }
   return (
     <>
       <h1>Theme Creator</h1>
       <ColorForm initialData={initialData} onSubmitColor={onSubmitColor} />
       {colors.map((color) => {
-        return <Color key={color.id} color={color} />;
+        return <Color key={color.id} color={color} onClick={handleDelete} />;
       })}
+      {colors.length == 0 && <p>No colors</p>}
     </>
   );
 }
