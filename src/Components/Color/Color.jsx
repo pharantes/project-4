@@ -3,7 +3,6 @@ import DeleteButton from './DeleteButton'
 import EditButton from "./EditButton";
 import CopyButton from "./CopyButton";
 import ContrastChecker from "./ContrastChecker";
-import { useEffect, useState } from "react";
 export default function Color({ color, handleDelete, handleEdit, handleCopy }) {
 
 
