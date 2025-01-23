@@ -1,7 +1,8 @@
 import "./Color.css";
 import DeleteButton from './DeleteButton'
 import EditButton from "./EditButton";
-export default function Color({ color, handleDelete, handleEdit }) {
+import CopyButton from "./CopyButton";
+export default function Color({ color, handleDelete, handleEdit, handleCopy }) {
   return (
     <div
       className="color-card"
@@ -11,6 +12,8 @@ export default function Color({ color, handleDelete, handleEdit }) {
       }}
     >
       <h3 className="color-card-headline">{color.hex}</h3>
+      <CopyButton name="Copy" handleCopy={handleCopy} color={color} colorHex={color.hex} />
+
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       <DeleteButton type="delete" name="Delete" handleDelete={handleDelete} colorId={color.id} />
