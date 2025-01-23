@@ -20,12 +20,15 @@ export default function ContrastChecker({ hex, contrast }) {
             let data = await response.json()
             setContrast(data.overall)
         }
-
         startFetching();
     }, []);
 
     return (
-        <><span>Overall Contrast Score: {overallContrast}</span></>
+        <>
+            {overallContrast === "Yup" && <><span style={{ backgroundColor: "green", color: "white" }}>Overall Contrast Score: {overallContrast}</span></>}
+            {overallContrast === "Kinda" && <><span style={{ backgroundColor: "yellow", color: "black" }}>Overall Contrast Score: {overallContrast}</span></>}
+            {overallContrast === "Nope" && <><span style={{ backgroundColor: "red", color: "white" }}>Overall Contrast Score: {overallContrast}</span ></>}
+        </>
     )
 
 }

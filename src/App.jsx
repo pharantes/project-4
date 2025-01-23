@@ -4,7 +4,7 @@ import "./App.css";
 import ColorForm from "./Components/Color/ColorForm";
 import { uid } from "uid/single";
 import useLocalStorageState from "use-local-storage-state";
-import { useEffect } from "react";
+
 
 function App() {
   const initialData = { role: "some color", hex: "#123456", contrastText: "#ffffff" }
@@ -13,7 +13,7 @@ function App() {
   })
 
   function onSubmitColor(data) {
-    setColors((prevState) => [...prevState, { ...data, id: uid() }])
+    setColors((prevState) => [{ ...data, id: uid() }, ...prevState])
   }
   function handleDelete(id) {
     setColors(colors.filter((color) => {
