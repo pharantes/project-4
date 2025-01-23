@@ -28,13 +28,19 @@ function App() {
     } : color)
     setColors(newColors)
   }
-
+  async function handleCopy(hex) {
+    try {
+      await navigator.clipboard.writeText(hex);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
   return (
     <>
       <h1>Theme Creator</h1>
       <ColorForm initialData={initialData} onSubmitColor={onSubmitColor} />
       {colors?.map((color) => {
-        return <Color key={color.id} color={color} handleDelete={handleDelete} handleEdit={handleEdit} />;
+        return <Color key={color.id} color={color} handleDelete={handleDelete} handleEdit={handleEdit} handleCopy={handleCopy} />;
       })}
       {colors?.length == 0 && <p>No colors</p>}
     </>
