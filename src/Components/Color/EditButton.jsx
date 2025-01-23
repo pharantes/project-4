@@ -16,6 +16,7 @@ export default function EditButton({ name, handleEdit, color, colorId }) {
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData);
         handleEdit(data, colorId)
+        setConfirm(false)
     }
     return (
         <>
