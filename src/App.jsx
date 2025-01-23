@@ -4,10 +4,13 @@ import "./App.css";
 import ColorForm from "./Components/Color/ColorForm";
 import { useState } from "react";
 import { uid } from "uid/single";
+import useLocalStorageState from "use-local-storage-state";
 
 function App() {
   const initialData = { role: "some color", hex: "#123456", contrastText: "#ffffff" }
-  const [colors, setColors] = useState(initialColors)
+  const [colors, setColors] = useLocalStorageState('colors', {
+    defaultValue: initialColors
+  })
   function onSubmitColor(data) {
     setColors((prevState) => [...prevState, { ...data, id: uid() }])
   }
