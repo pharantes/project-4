@@ -13,15 +13,12 @@ export default function ColorForm({
             gap: ".5rem"
         }
     }
-
     function handleSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData);
         onSubmitColor(data);
     }
-
-
     return (
         <form style={styles.form} onSubmit={handleSubmit}>
             <label htmlFor="role">Role</label>
