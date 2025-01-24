@@ -20,7 +20,6 @@ function App() {
       defaultValue: initialColors,
     }
   );
-  // const [colors, setColors] = useState(initialColors);
   const [localStorageThemes, setLocalStorageThemes] = useLocalStorageState(
     "themes",
     {
@@ -32,15 +31,11 @@ function App() {
   let currentThemeColors = theme.colors.map((colorId) =>
     localStorageColors.find((color) => colorId == color.id)
   );
-  // localStorage.clear();
   function onSelectTheme(themeName) {
     const filteredTheme = localStorageThemes.find((theme) => {
       return theme.name == themeName;
     });
-    // if (!filteredTheme) {
-    //   setLocalStorageColors(initialColors);
-    //   return;
-    // }
+
     setCurrentThemeId(filteredTheme.id);
   }
 

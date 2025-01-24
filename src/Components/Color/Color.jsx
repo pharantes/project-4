@@ -44,7 +44,6 @@ export default function Color({
           color={color}
           colorId={color.id}
         />
-        {/* {console.log("Found issue 1")} */}
       </div>
       <br />
     </>
