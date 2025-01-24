@@ -15,7 +15,15 @@ export default function ThemeForm({
     onSelectTheme(themeName);
     setThemeName(themeName);
   }
-
+  function handleAdd() {
+    onSubmitTheme();
+  }
+  function handleDelete() {
+    handleThemeDelete();
+  }
+  function handleEdit() {
+    handleThemeEdit();
+  }
   return (
     <>
       <form>
@@ -34,19 +42,19 @@ export default function ThemeForm({
         </select>
       </form>
       <br />
-      <button style={styles} onClick={onSubmitTheme}>
+      <button style={styles} onClick={handleAdd}>
         Add
       </button>
       <button
         style={styles}
         disabled={themeName == "Default Theme" ? true : false}
-        onClick={handleThemeDelete}
+        onClick={handleDelete}
       >
         Edit
       </button>
       <button
         disabled={themeName == "Default Theme" ? true : false}
-        onClick={handleThemeEdit}
+        onClick={handleEdit}
       >
         Delete
       </button>
