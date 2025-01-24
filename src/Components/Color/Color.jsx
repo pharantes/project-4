@@ -3,7 +3,13 @@ import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 import CopyButton from "./CopyButton";
 import ContrastChecker from "./ContrastChecker";
-export default function Color({ color, handleDelete, handleEdit, handleCopy }) {
+export default function Color({
+  color,
+  handleDelete,
+  handleEdit,
+  handleCopy,
+  theme,
+}) {
   return (
     <>
       <div
@@ -29,6 +35,7 @@ export default function Color({ color, handleDelete, handleEdit, handleCopy }) {
           name="Delete"
           handleDelete={handleDelete}
           colorId={color.id}
+          themeId={theme.id}
         />
         <EditButton
           type="edit"

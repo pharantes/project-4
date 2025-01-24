@@ -20,6 +20,7 @@ function App() {
       defaultValue: initialColors,
     }
   );
+  // const [colors, setColors] = useState(initialColors);
   const [localStorageThemes, setLocalStorageThemes] = useLocalStorageState(
     "themes",
     {
@@ -27,8 +28,8 @@ function App() {
     }
   );
   const [themeID, setCurrentThemeId] = useState("t1");
-  const theme = localStorageThemes.find((theme) => theme.id == themeID);
-  const currentThemeColors = theme.colors.map((colorId) =>
+  const theme = localStorageThemes?.find((theme) => theme.id == themeID);
+  let currentThemeColors = theme.colors.map((colorId) =>
     localStorageColors.find((color) => colorId == color.id)
   );
   // localStorage.clear();
@@ -36,28 +37,48 @@ function App() {
     const filteredTheme = localStorageThemes.find((theme) => {
       return theme.name == themeName;
     });
-    if (!filteredTheme) {
-      setLocalStorageColors(initialColors);
-      return;
-    }
+    // if (!filteredTheme) {
+    //   setLocalStorageColors(initialColors);
+    //   return;
+    // }
     setCurrentThemeId(filteredTheme.id);
   }
+
   function onSubmitColor(data) {
-    setLocalStorageColors((prevState) => [
-      { ...data, id: uid() },
-      ...prevState,
-    ]);
+    const colorId = uid();
+    setLocalStorageColors([{ ...data, id: colorId }, ...localStorageColors]);
+    setLocalStorageThemes(
+      localStorageThemes.map((item) =>
+        item.id === theme.id
+          ? { ...item, colors: [colorId, ...item.colors] }
+          : item
+      )
+    );
   }
-  function handleDelete(id) {
+
+  function handleDelete(colorId, themeId) {
+    setCurrentThemeId(themeId);
+
+    setLocalStorageThemes(
+      localStorageThemes.filter((item) => {
+        return item.colors.includes(colorId)
+          ? (currentThemeColors = item.colors.splice(
+              item.colors.indexOf(colorId),
+              1
+            ))
+          : (currentThemeColors = item.colors);
+      })
+    );
     setLocalStorageColors(
       localStorageColors.filter((color) => {
-        return color.id != id;
+        return color.id != colorId;
       })
     );
   }
-  function handleEdit(data, id) {
+
+  function handleEdit(data, colorId) {
     const newColors = localStorageColors.map((color) =>
-      color.id === id
+      color.id === colorId
         ? {
             ...color,
             role: data.role,
@@ -78,7 +99,13 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      <ThemeForm themes={localStorageThemes} onSelectTheme={onSelectTheme} />
+      <ThemeForm
+        themes={localStorageThemes}
+        onSelectTheme={onSelectTheme}
+        // onSubmitTheme={onSubmitTheme}
+        // handleThemeDelete={handleThemeDelete}
+        // handleThemeEdit={handleThemeEdit}
+      />
       <br />
       <ColorForm initialData={initialData} onSubmitColor={onSubmitColor} />
       <br />
@@ -87,6 +114,7 @@ function App() {
           <Color
             key={color.id}
             color={color}
+            theme={theme}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
             handleCopy={handleCopy}

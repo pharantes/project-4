@@ -1,11 +1,28 @@
-export default function ThemeForm({ themes, onSelectTheme }) {
+import { useState } from "react";
+
+export default function ThemeForm({
+  themes,
+  onSelectTheme,
+  onSubmitTheme,
+  handleThemeDelete,
+  handleThemeEdit,
+}) {
+  const styles = {
+    marginRight: ".5rem",
+  };
+  const [themeName, setThemeName] = useState("Default Theme");
+  function selectedTheme(themeName) {
+    onSelectTheme(themeName);
+    setThemeName(themeName);
+  }
+
   return (
     <>
       <form>
         <select
           name="selectedTheme"
           id="selectedTheme"
-          onChange={(e) => onSelectTheme(e.target.value)}
+          onChange={(e) => selectedTheme(e.target.value)}
         >
           {themes.map((theme) => {
             return (
@@ -16,7 +33,24 @@ export default function ThemeForm({ themes, onSelectTheme }) {
           })}
         </select>
       </form>
-      ;
+      <br />
+      <button style={styles} onClick={onSubmitTheme}>
+        Add
+      </button>
+      <button
+        style={styles}
+        disabled={themeName == "Default Theme" ? true : false}
+        onClick={handleThemeDelete}
+      >
+        Edit
+      </button>
+      <button
+        disabled={themeName == "Default Theme" ? true : false}
+        onClick={handleThemeEdit}
+      >
+        Delete
+      </button>
+      <br />
     </>
   );
 }
